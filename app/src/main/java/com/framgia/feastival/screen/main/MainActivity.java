@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.framgia.feastival.R;
 import com.framgia.feastival.databinding.ActivityMainBinding;
 import com.framgia.feastival.screen.BaseActivity;
+import com.google.android.gms.maps.SupportMapFragment;
 
 /**
  * Main Screen.
@@ -27,6 +28,10 @@ public class MainActivity extends BaseActivity {
         ActivityMainBinding binding =
                 DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setViewModel((MainViewModel) mViewModel);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+            .findFragmentById(R.id.map);
+        mViewModel.setMapFragment(mapFragment);
+        
     }
 
     @Override
