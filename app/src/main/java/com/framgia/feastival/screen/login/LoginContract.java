@@ -1,18 +1,19 @@
-package com.framgia.feastival.screen.main;
+package com.framgia.feastival.screen.login;
 
 import com.framgia.feastival.screen.BasePresenter;
 import com.framgia.feastival.screen.BaseViewModel;
-import com.google.android.gms.maps.SupportMapFragment;
 
 /**
  * This specifies the contract between the view and the presenter.
  */
-interface MainContract {
+interface LoginContract {
     /**
      * View.
      */
     interface ViewModel extends BaseViewModel<Presenter> {
-        void setMapFragment(SupportMapFragment mapFragment);
+        void onLoginClick();
+        void onRegisterClick();
+        void onForgotPassWordClick();
     }
 
     /**
