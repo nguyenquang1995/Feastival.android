@@ -2,7 +2,7 @@ package com.framgia.feastival.data.source;
 
 import com.framgia.feastival.data.source.model.RestaurantsResponse;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by tmd on 07/07/2017.
