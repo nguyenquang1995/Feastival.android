@@ -5,7 +5,7 @@ import com.framgia.feastival.data.source.model.RestaurantsResponse;
 import com.framgia.feastival.data.service.FeastivalService;
 import com.framgia.feastival.data.service.ServiceGenerator;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by tmd on 07/07/2017.

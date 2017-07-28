@@ -6,16 +6,14 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 
 import com.framgia.feastival.R;
+import com.framgia.feastival.data.source.model.RestaurantsResponse;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 
 /**
  * Exposes the data to be used in the Main screen.
@@ -100,6 +98,15 @@ public class MainViewModel implements MainContract.ViewModel, OnMapReadyCallback
     @Override
     public void setMapFragment(SupportMapFragment mapFragment) {
         mMapFragment = mapFragment;
+    }
+
+    @Override
+    public void onGetRestaurantsSuccess(RestaurantsResponse restaurantsResponse) {
+        // TODO: 28/07/2017  
+    }
+
+    @Override
+    public void onGetRestaurantsFailed(Throwable e) {
     }
 
     @Override
