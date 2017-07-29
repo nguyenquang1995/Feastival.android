@@ -24,6 +24,7 @@ final class MainPresenter implements MainContract.Presenter {
                          RestaurantDataSource restaurantRepository) {
         mViewModel = viewModel;
         mRestaurantRepository = restaurantRepository;
+        mCompositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -39,7 +40,7 @@ final class MainPresenter implements MainContract.Presenter {
     public void getRestaurants() {
         Disposable disposable = mRestaurantRepository.getRestaurants()
             .subscribeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(new DisposableObserver<RestaurantsResponse>() {
                 @Override
                 public void onNext(@NonNull RestaurantsResponse response) {

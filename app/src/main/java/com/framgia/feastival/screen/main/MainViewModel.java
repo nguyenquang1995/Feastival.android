@@ -8,12 +8,18 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 
 import com.framgia.feastival.R;
+import com.framgia.feastival.data.source.model.Restaurant;
 import com.framgia.feastival.data.source.model.RestaurantsResponse;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Exposes the data to be used in the Main screen.
@@ -25,6 +31,7 @@ public class MainViewModel implements MainContract.ViewModel, OnMapReadyCallback
     private MainContract.Presenter mPresenter;
     private SupportMapFragment mMapFragment;
     private GoogleMap mMap;
+    private List<Marker> mRestaurantsMarker;
     private LatLng myLocation;
     private boolean isNeedInMyLocation;
     private ProgressDialog mProgressDialog;
@@ -39,6 +46,7 @@ public class MainViewModel implements MainContract.ViewModel, OnMapReadyCallback
 
     public MainViewModel(Context context) {
         mContext = context;
+        mRestaurantsMarker = new ArrayList<>();
     }
 
     private void zoomInMyPositonAutomaticly() {
@@ -72,6 +80,17 @@ public class MainViewModel implements MainContract.ViewModel, OnMapReadyCallback
         }
     }
 
+    private void markNearbyRestaurants(RestaurantsResponse restaurantsResponse) {
+        mRestaurantsMarker.clear();
+        for (Restaurant restaurant : restaurantsResponse.getList()) {
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(restaurant.getLatitude(), restaurant.getLongtitude()))
+                .title(String.valueOf(restaurant.getId())));
+            marker.setTag(restaurant);
+            mRestaurantsMarker.add(marker);
+        }
+    }
+
     @Override
     public void onStart() {
         mMapFragment.getMapAsync(this);
@@ -102,7 +121,7 @@ public class MainViewModel implements MainContract.ViewModel, OnMapReadyCallback
 
     @Override
     public void onGetRestaurantsSuccess(RestaurantsResponse restaurantsResponse) {
-        // TODO: 28/07/2017  
+        markNearbyRestaurants(restaurantsResponse);
     }
 
     @Override
@@ -113,5 +132,6 @@ public class MainViewModel implements MainContract.ViewModel, OnMapReadyCallback
     public void onMapLoaded() {
         mProgressDialog.dismiss();
         getMyLocation();
+        mPresenter.getRestaurants();
     }
 }
